@@ -1,0 +1,13 @@
+# Virtual environment
+mlx_env/
+venv/
+
+# Model weights (5–10GB)
+models/phi3-mlx-4bit/
+models/*.safetensors
+models/*.bin
+models/**/*.bin
+
+# macOS junk
+.DS_Store
+
