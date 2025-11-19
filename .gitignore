@@ -11,3 +11,4 @@ models/**/*.bin
 # macOS junk
 .DS_Store
 
+*.safetensors

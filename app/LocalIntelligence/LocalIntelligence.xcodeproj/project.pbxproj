@@ -1,0 +1,509 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D44ABED72ECD256300160A34 /* MLX in Frameworks */ = {isa = PBXBuildFile; productRef = D44ABED62ECD256300160A34 /* MLX */; };
+		D44ABED92ECD256300160A34 /* MLXFFT in Frameworks */ = {isa = PBXBuildFile; productRef = D44ABED82ECD256300160A34 /* MLXFFT */; };
+		D44ABEDB2ECD256300160A34 /* MLXFast in Frameworks */ = {isa = PBXBuildFile; productRef = D44ABEDA2ECD256300160A34 /* MLXFast */; };
+		D44ABEDD2ECD256300160A34 /* MLXLinalg in Frameworks */ = {isa = PBXBuildFile; productRef = D44ABEDC2ECD256300160A34 /* MLXLinalg */; };
+		D44ABEDF2ECD256300160A34 /* MLXNN in Frameworks */ = {isa = PBXBuildFile; productRef = D44ABEDE2ECD256300160A34 /* MLXNN */; };
+		D44ABEFA2ECD275500160A34 /* ModelEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44ABEF92ECD274C00160A34 /* ModelEngine.swift */; };
+		D44ABEFD2ECD28F800160A34 /* MLXEmbedders in Frameworks */ = {isa = PBXBuildFile; productRef = D44ABEFC2ECD28F800160A34 /* MLXEmbedders */; };
+		D44ABEFF2ECD28F800160A34 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = D44ABEFE2ECD28F800160A34 /* MLXLLM */; };
+		D44ABF012ECD28F800160A34 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = D44ABF002ECD28F800160A34 /* MLXLMCommon */; };
+		D44ABF032ECD28F800160A34 /* MLXVLM in Frameworks */ = {isa = PBXBuildFile; productRef = D44ABF022ECD28F800160A34 /* MLXVLM */; };
+		D4D21B432ECE12A300977A02 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D21B412ECE11F700977A02 /* HomeView.swift */; };
+		D4D21B442ECE12A600977A02 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D21B422ECE120B00977A02 /* ChatView.swift */; };
+		D4D21B462ECE158E00977A02 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D21B452ECE158B00977A02 /* Message.swift */; };
+		D4D21B482ECE15D800977A02 /* ChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D21B472ECE15D500977A02 /* ChatBubble.swift */; };
+		D4D21B4A2ECE21AB00977A02 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D21B492ECE21A600977A02 /* LocalDataManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D44ABEC72ECD21EC00160A34 /* LocalIntelligence.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalIntelligence.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D44ABEF92ECD274C00160A34 /* ModelEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelEngine.swift; sourceTree = "<group>"; };
+		D4D21B412ECE11F700977A02 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		D4D21B422ECE120B00977A02 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		D4D21B452ECE158B00977A02 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		D4D21B472ECE15D500977A02 /* ChatBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubble.swift; sourceTree = "<group>"; };
+		D4D21B492ECE21A600977A02 /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D44ABEC92ECD21EC00160A34 /* LocalIntelligence */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LocalIntelligence;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D44ABEC42ECD21EC00160A34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D44ABEFF2ECD28F800160A34 /* MLXLLM in Frameworks */,
+				D44ABEDB2ECD256300160A34 /* MLXFast in Frameworks */,
+				D44ABEDD2ECD256300160A34 /* MLXLinalg in Frameworks */,
+				D44ABEFD2ECD28F800160A34 /* MLXEmbedders in Frameworks */,
+				D44ABED72ECD256300160A34 /* MLX in Frameworks */,
+				D44ABF032ECD28F800160A34 /* MLXVLM in Frameworks */,
+				D44ABEDF2ECD256300160A34 /* MLXNN in Frameworks */,
+				D44ABF012ECD28F800160A34 /* MLXLMCommon in Frameworks */,
+				D44ABED92ECD256300160A34 /* MLXFFT in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D44ABEBE2ECD21EC00160A34 = {
+			isa = PBXGroup;
+			children = (
+				D4D21B402ECE11AD00977A02 /* Views */,
+				D4D21B3F2ECE11A900977A02 /* Core */,
+				D44ABEC92ECD21EC00160A34 /* LocalIntelligence */,
+				D44ABEC82ECD21EC00160A34 /* Products */,
+				D44ABF1D2ECD317000160A34 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D44ABEC82ECD21EC00160A34 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D44ABEC72ECD21EC00160A34 /* LocalIntelligence.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D44ABF1D2ECD317000160A34 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D4D21B3F2ECE11A900977A02 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D4D21B492ECE21A600977A02 /* LocalDataManager.swift */,
+				D4D21B452ECE158B00977A02 /* Message.swift */,
+				D44ABEF92ECD274C00160A34 /* ModelEngine.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		D4D21B402ECE11AD00977A02 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D4D21B472ECE15D500977A02 /* ChatBubble.swift */,
+				D4D21B412ECE11F700977A02 /* HomeView.swift */,
+				D4D21B422ECE120B00977A02 /* ChatView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D44ABEC62ECD21EC00160A34 /* LocalIntelligence */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D44ABED22ECD21ED00160A34 /* Build configuration list for PBXNativeTarget "LocalIntelligence" */;
+			buildPhases = (
+				D44ABEC32ECD21EC00160A34 /* Sources */,
+				D44ABEC42ECD21EC00160A34 /* Frameworks */,
+				D44ABEC52ECD21EC00160A34 /* Resources */,
+				D44ABF6D2ECD3F2F00160A34 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D44ABEC92ECD21EC00160A34 /* LocalIntelligence */,
+			);
+			name = LocalIntelligence;
+			packageProductDependencies = (
+				D44ABED62ECD256300160A34 /* MLX */,
+				D44ABED82ECD256300160A34 /* MLXFFT */,
+				D44ABEDA2ECD256300160A34 /* MLXFast */,
+				D44ABEDC2ECD256300160A34 /* MLXLinalg */,
+				D44ABEDE2ECD256300160A34 /* MLXNN */,
+				D44ABEFC2ECD28F800160A34 /* MLXEmbedders */,
+				D44ABEFE2ECD28F800160A34 /* MLXLLM */,
+				D44ABF002ECD28F800160A34 /* MLXLMCommon */,
+				D44ABF022ECD28F800160A34 /* MLXVLM */,
+			);
+			productName = LocalIntelligence;
+			productReference = D44ABEC72ECD21EC00160A34 /* LocalIntelligence.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D44ABEBF2ECD21EC00160A34 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2610;
+				LastUpgradeCheck = 2610;
+				TargetAttributes = {
+					D44ABEC62ECD21EC00160A34 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
+				};
+			};
+			buildConfigurationList = D44ABEC22ECD21EC00160A34 /* Build configuration list for PBXProject "LocalIntelligence" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D44ABEBE2ECD21EC00160A34;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D44ABED52ECD256300160A34 /* XCRemoteSwiftPackageReference "mlx-swift" */,
+				D44ABEFB2ECD28F800160A34 /* XCRemoteSwiftPackageReference "mlx-swift-lm" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D44ABEC82ECD21EC00160A34 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D44ABEC62ECD21EC00160A34 /* LocalIntelligence */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D44ABEC52ECD21EC00160A34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D44ABF6D2ECD3F2F00160A34 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Klasör Adı\nFOLDER_NAME=\"phi3-mlx-4bit\"\n\n# Kaynak ve Hedef Yollar\nSOURCE=\"${PROJECT_DIR}/${FOLDER_NAME}\"\nDEST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/${FOLDER_NAME}\"\n\necho \"🚀 [Script] Kopyalama Başlıyor...\"\necho \"📂 Kaynak: $SOURCE\"\necho \"🎯 Hedef:  $DEST\"\n\n# Kaynak var mı kontrol et\nif [ -d \"$SOURCE\" ]; then\n    # Hedefte varsa sil (temiz kurulum)\n    rm -rf \"$DEST\"\n    # Kopyala\n    cp -R \"$SOURCE\" \"$DEST\"\n    echo \"✅ [Script] Kopyalama Başarılı!\"\nelse\n    # Eğer ana dizinde bulamazsa bir de alt klasöre bakalım (LocalIntelligence klasörü)\n    SOURCE_ALT=\"${PROJECT_DIR}/LocalIntelligence/${FOLDER_NAME}\"\n    if [ -d \"$SOURCE_ALT\" ]; then\n        rm -rf \"$DEST\"\n        cp -R \"$SOURCE_ALT\" \"$DEST\"\n        echo \"✅ [Script] Alt klasörden kopyalama başarılı!\"\n    else\n        echo \"❌ [Script] HATA: Klasör bulunamadı! Lütfen klasör isminin '$FOLDER_NAME' olduğundan emin olun.\"\n        exit 1\n    fi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D44ABEC32ECD21EC00160A34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4D21B4A2ECE21AB00977A02 /* LocalDataManager.swift in Sources */,
+				D4D21B432ECE12A300977A02 /* HomeView.swift in Sources */,
+				D4D21B442ECE12A600977A02 /* ChatView.swift in Sources */,
+				D4D21B462ECE158E00977A02 /* Message.swift in Sources */,
+				D44ABEFA2ECD275500160A34 /* ModelEngine.swift in Sources */,
+				D4D21B482ECE15D800977A02 /* ChatBubble.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D44ABED02ECD21ED00160A34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D44ABED12ECD21ED00160A34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D44ABED32ECD21ED00160A34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 684S6J2669;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Local Intelligence needs access to your calendar to manage your schedule locally.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ege.oguz.LocalIntelligence;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D44ABED42ECD21ED00160A34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 684S6J2669;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Local Intelligence needs access to your calendar to manage your schedule locally.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ege.oguz.LocalIntelligence;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D44ABEC22ECD21EC00160A34 /* Build configuration list for PBXProject "LocalIntelligence" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D44ABED02ECD21ED00160A34 /* Debug */,
+				D44ABED12ECD21ED00160A34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D44ABED22ECD21ED00160A34 /* Build configuration list for PBXNativeTarget "LocalIntelligence" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D44ABED32ECD21ED00160A34 /* Debug */,
+				D44ABED42ECD21ED00160A34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D44ABED52ECD256300160A34 /* XCRemoteSwiftPackageReference "mlx-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.29.1;
+			};
+		};
+		D44ABEFB2ECD28F800160A34 /* XCRemoteSwiftPackageReference "mlx-swift-lm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift-lm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.29.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D44ABED62ECD256300160A34 /* MLX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D44ABED52ECD256300160A34 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLX;
+		};
+		D44ABED82ECD256300160A34 /* MLXFFT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D44ABED52ECD256300160A34 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLXFFT;
+		};
+		D44ABEDA2ECD256300160A34 /* MLXFast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D44ABED52ECD256300160A34 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLXFast;
+		};
+		D44ABEDC2ECD256300160A34 /* MLXLinalg */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D44ABED52ECD256300160A34 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLXLinalg;
+		};
+		D44ABEDE2ECD256300160A34 /* MLXNN */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D44ABED52ECD256300160A34 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLXNN;
+		};
+		D44ABEFC2ECD28F800160A34 /* MLXEmbedders */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D44ABEFB2ECD28F800160A34 /* XCRemoteSwiftPackageReference "mlx-swift-lm" */;
+			productName = MLXEmbedders;
+		};
+		D44ABEFE2ECD28F800160A34 /* MLXLLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D44ABEFB2ECD28F800160A34 /* XCRemoteSwiftPackageReference "mlx-swift-lm" */;
+			productName = MLXLLM;
+		};
+		D44ABF002ECD28F800160A34 /* MLXLMCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D44ABEFB2ECD28F800160A34 /* XCRemoteSwiftPackageReference "mlx-swift-lm" */;
+			productName = MLXLMCommon;
+		};
+		D44ABF022ECD28F800160A34 /* MLXVLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D44ABEFB2ECD28F800160A34 /* XCRemoteSwiftPackageReference "mlx-swift-lm" */;
+			productName = MLXVLM;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D44ABEBF2ECD21EC00160A34 /* Project object */;
+}
