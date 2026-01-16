@@ -78,7 +78,7 @@ class ModelEngine: ObservableObject {
             
             // 1. System Prompt (The Core Personality & Data)
             let dateString = Date().formatted(date: .complete, time: .shortened)
-            
+            print(contextData)
             prompt += """
             <|im_start|>system
             You are 'Local Mind', a strictly schedule-focused offline assistant.
@@ -88,19 +88,29 @@ class ModelEngine: ObservableObject {
             \(contextData)
             
             RULES:
-            1. Your ONLY job is to manage the calendar and schedule.
-            2. Keep answers VERY SHORT (max 2 sentences).
-            3. Do NOT answer general knowledge questions (like history, math, coding). If asked, say: "I am focused only on your schedule."
-            4. Use the [DATA] provided above to answer precise questions.
+            1. Your ONLY job is to manage the calendar using [DATA].
+            2. THE DATA IS ALREADY SORTED.
+            3. IF user asks "What's next" or "Next event": DO NOT CALCULATE TIME. Just repeat the VERY FIRST line starting with [EVENT] from the [DATA].
+            4. IF user asks "Summarize": List all events in [DATA].
+            5. IF [DATA] is empty, say "No upcoming events".
+            6. Do NOT refuse "tomorrow" or "today" questions.
             <|im_end|>
             """
             
-            // 2. Chat History (The Memory)
-            // We take the last 6 messages (3 turns) to keep it fast.
-            // Adjust this number based on performance needs.
-            let recentMessages = history.suffix(6)
+            let lowerInput = currentInput.lowercased()
+            let isScheduleQuestion = lowerInput.contains("summarize") ||
+                                     lowerInput.contains("week") ||
+                                     lowerInput.contains("next") ||
+                                     lowerInput.contains("plan") ||
+                                     lowerInput.contains("busy") ||
+                                     lowerInput.contains("agenda") ||
+                                     lowerInput.contains("tomorrow") ||
+                                     lowerInput.contains("today")
+
+            let messagesToInclude = isScheduleQuestion ? [] : history.suffix(6)
             
-            for msg in recentMessages {
+            
+            for msg in messagesToInclude {
                 let role = msg.isUser ? "user" : "assistant"
                 // Clean the content to avoid format injection issues
                 let content = msg.content.replacingOccurrences(of: "<|im_end|>", with: "")

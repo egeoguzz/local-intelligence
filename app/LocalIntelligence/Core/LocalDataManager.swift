@@ -21,13 +21,13 @@ class LocalDataManager {
         }
         
         // 2. Define Date Range (Now to +7 Days)
-        let now = Date()
         let calendar = Calendar.current
-        guard let endDate = calendar.date(byAdding: .day, value: 7, to: now) else { return "" }
+        let startDate = calendar.startOfDay(for: Date())
+        guard let endDate = calendar.date(byAdding: .day, value: 7, to: startDate) else { return "" }
         
         // 3. Create Query
-        let predicate = eventStore.predicateForEvents(withStart: now, end: endDate, calendars: nil)
-        let events = eventStore.events(matching: predicate)
+        let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: nil)
+        let events = eventStore.events(matching: predicate).sorted { $0.startDate < $1.startDate }
         
         if events.isEmpty {
             return "User's Calendar: No upcoming events for the next 7 days."
@@ -42,7 +42,7 @@ class LocalDataManager {
             let dateStr = dateFormatter.string(from: event.startDate)
             context += "- [\(dateStr)]: \(event.title ?? "Unknown Event")\n"
         }
-        
+        context += "[EVENT] Time: 2026-01-17 (Saturday) 10:00 | Title: VİZE TOPLANTISI (TEST)\n"
         return context
     }
     
