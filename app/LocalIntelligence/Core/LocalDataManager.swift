@@ -40,9 +40,8 @@ class LocalDataManager {
         
         for event in events {
             let dateStr = dateFormatter.string(from: event.startDate)
-            context += "- [\(dateStr)]: \(event.title ?? "Unknown Event")\n"
+            context += "- \(dateStr): \(event.title ?? "Untitled Event")\n"
         }
-        context += "[EVENT] Time: 2026-01-17 (Saturday) 10:00 | Title: VİZE TOPLANTISI (TEST)\n"
         return context
     }
     

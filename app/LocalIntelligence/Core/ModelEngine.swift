@@ -25,7 +25,7 @@ class ModelEngine: ObservableObject {
     @Published var isModelDownloaded: Bool = false
     
     private var modelContainer: ModelContainer?
-    private let modelId = "mlx-community/Qwen2.5-1.5B-Instruct-4bit" // Configuration: Qwen 2.5 - 1.5B
+    private let modelId = "mlx-community/Llama-3.2-1B-Instruct-4bit" // Configuration: Qwen 2.5 - 1.5B
     private let dataManager = LocalDataManager()
         
     
@@ -71,65 +71,123 @@ class ModelEngine: ObservableObject {
     
     // MARK: - History Management
         
-        /// Converts the recent chat history into a single string for the model's context window.
-        /// We take the last 'limit' messages to prevent the context from getting too large (Memory Management).
+    /// Hybrid Prompt Builder using Pre-Computed Responses (PCR).
+        /// This architecture bypasses the LLM's weak reasoning capabilities on 1B models by
+        /// injecting the correct answer directly into the system context.
         private func buildContextualPrompt(history: [Message], currentInput: String, contextData: String) -> String {
-            var prompt = ""
             
-            // 1. System Prompt (The Core Personality & Data)
-            let dateString = Date().formatted(date: .complete, time: .shortened)
-            print(contextData)
-            prompt += """
-            <|im_start|>system
-            You are 'Local Mind', a strictly schedule-focused offline assistant.
-            Current Date: \(dateString)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE, MMMM d"
+            dateFormatter.locale = Locale(identifier: "en_US")
             
-            [DATA]
-            \(contextData)
-            
-            RULES:
-            1. Your ONLY job is to manage the calendar using [DATA].
-            2. THE DATA IS ALREADY SORTED.
-            3. IF user asks "What's next" or "Next event": DO NOT CALCULATE TIME. Just repeat the VERY FIRST line starting with [EVENT] from the [DATA].
-            4. IF user asks "Summarize": List all events in [DATA].
-            5. IF [DATA] is empty, say "No upcoming events".
-            6. Do NOT refuse "tomorrow" or "today" questions.
-            <|im_end|>
-            """
+            let today = Date()
+            let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+            let todayStr = dateFormatter.string(from: today)
+            let tomorrowStr = dateFormatter.string(from: tomorrow)
             
             let lowerInput = currentInput.lowercased()
-            let isScheduleQuestion = lowerInput.contains("summarize") ||
-                                     lowerInput.contains("week") ||
-                                     lowerInput.contains("next") ||
-                                     lowerInput.contains("plan") ||
-                                     lowerInput.contains("busy") ||
-                                     lowerInput.contains("agenda") ||
-                                     lowerInput.contains("tomorrow") ||
-                                     lowerInput.contains("today")
-
-            let messagesToInclude = isScheduleQuestion ? [] : history.suffix(6)
             
+            // --- STEP 1: PRE-COMPUTE THE ANSWER IN SWIFT (The "Brain") ---
+            // We determine exactly what the output should look like using native Swift logic.
             
-            for msg in messagesToInclude {
-                let role = msg.isUser ? "user" : "assistant"
-                // Clean the content to avoid format injection issues
-                let content = msg.content.replacingOccurrences(of: "<|im_end|>", with: "")
+            var forcedSystemInstruction = ""
+            var isStrict = false
+            
+            // CASE A: TOMORROW
+            if lowerInput.contains("tomorrow") || lowerInput.contains("tmrw") {
+                isStrict = true
+                // Swift ile veriyi biz filtreliyoruz (LLM'e bırakmıyoruz)
+                let lines = contextData.components(separatedBy: "\n")
+                let matches = lines.filter { $0.contains(tomorrowStr) }
                 
-                if !content.isEmpty {
-                    prompt += "<|im_start|>\(role)\n\(content)<|im_end|>\n"
+                let finalAnswer = matches.isEmpty ? "No plans for tomorrow." : matches.joined(separator: "\n")
+                
+                forcedSystemInstruction = """
+                USER QUESTION: "Any plans for tomorrow?"
+                REQUIRED ANSWER:
+                \(finalAnswer)
+                
+                INSTRUCTION: Output the REQUIRED ANSWER exactly. Do not add any extra text.
+                """
+            }
+            // CASE B: NEXT EVENT
+            else if lowerInput.contains("next") {
+                isStrict = true
+                // İlk satırı Swift ile alıyoruz
+                let lines = contextData.components(separatedBy: "\n").filter { $0.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "-") }
+                let nextEvent = lines.first ?? "No upcoming events found."
+                
+                forcedSystemInstruction = """
+                USER QUESTION: "What's next?"
+                REQUIRED ANSWER:
+                \(nextEvent)
+                
+                INSTRUCTION: Output the REQUIRED ANSWER exactly. Do not explain.
+                """
+            }
+            // CASE C: SUMMARIZE / WEEK
+            else if lowerInput.contains("summarize") || lowerInput.contains("week") {
+                isStrict = true
+                // Tüm veriyi olduğu gibi basıyoruz
+                let summary = contextData.isEmpty ? "Your schedule is empty." : contextData
+                
+                forcedSystemInstruction = """
+                USER QUESTION: "Summarize my week"
+                REQUIRED ANSWER:
+                Here is your schedule:
+                \(summary)
+                
+                INSTRUCTION: Output the REQUIRED ANSWER exactly. Do not change "sea", "as" or generic titles.
+                """
+            }
+            // CASE D: TODAY
+            else if lowerInput.contains("today") {
+                isStrict = true
+                let lines = contextData.components(separatedBy: "\n")
+                let matches = lines.filter { $0.contains(todayStr) }
+                let finalAnswer = matches.isEmpty ? "You are free today." : matches.joined(separator: "\n")
+                
+                forcedSystemInstruction = """
+                USER QUESTION: "Am I busy today?"
+                REQUIRED ANSWER:
+                \(finalAnswer)
+                
+                INSTRUCTION: Output the REQUIRED ANSWER.
+                """
+            }
+            // CASE E: GENERAL CONVERSATION
+            else {
+                isStrict = false
+                forcedSystemInstruction = """
+                CONTEXT DATA:
+                \(contextData)
+                
+                INSTRUCTION: Answer the user's question using the CONTEXT DATA. Be brief.
+                """
+            }
+            
+            // --- STEP 2: CONSTRUCT PROMPT ---
+            
+            var prompt = "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n"
+            prompt += "You are DailyMind. Follow instructions strictly.\n"
+            prompt += forcedSystemInstruction
+            prompt += "<|eot_id|>"
+            
+            // Geçmiş sadece genel sohbette eklenir
+            if !isStrict {
+                for msg in history.suffix(4) {
+                    let role = msg.isUser ? "user" : "assistant"
+                    prompt += "<|start_header_id|>\(role)<|end_header_id|>\n\n\(msg.content)<|eot_id|>"
                 }
             }
             
-            // 3. Current User Input
-            prompt += """
-            <|im_start|>user
-            \(currentInput)<|im_end|>
-            <|im_start|>assistant
-            """
+            prompt += "<|start_header_id|>user<|end_header_id|>\n\n\(currentInput)<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n"
             
             return prompt
         }
-    
+
+  
+
     // MARK: - Generation (With Memory & RAG)
         func generate(prompt: String) async {
             guard let container = modelContainer, case .ready = state else { return }
@@ -172,7 +230,7 @@ class ModelEngine: ObservableObject {
                     let input = try await context.processor.prepare(input: userInput)
                     
                     // Temperature 0.5 is a good balance for chat + facts
-                    let parameters = GenerateParameters(maxTokens: 1024, temperature: 0.5)
+                    let parameters = GenerateParameters(maxTokens: 1024, temperature: 0.0)
                     
                     return try MLXLMCommon.generate(
                         input: input,
