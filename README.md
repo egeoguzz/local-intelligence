@@ -88,6 +88,3 @@ DailyMind operates on a strict **Local-Only** policy:
 2.  Open `ios-app/DailyMind.xcodeproj` in Xcode 15+.
 3.  Set the Signing Team to your Apple Developer account.
 4.  **Important:** Deploy to a physical device (iPhone 15 Pro or newer recommended). The MLX Metal backend requires physical GPU hardware; it will not run on the Simulator.
-
----
-
