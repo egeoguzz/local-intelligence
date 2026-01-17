@@ -91,4 +91,3 @@ DailyMind operates on a strict **Local-Only** policy:
 
 ---
 
-*Project developed for the Global Talent Visa (Tech Nation) portfolio.*
