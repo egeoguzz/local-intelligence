@@ -25,7 +25,7 @@ class ModelEngine: ObservableObject {
     @Published var isModelDownloaded: Bool = false
     
     private var modelContainer: ModelContainer?
-    private let modelId = "mlx-community/Llama-3.2-1B-Instruct-4bit" // Configuration: Qwen 2.5 - 1.5B
+    private let modelId = "mlx-community/Llama-3.2-1B-Instruct-4bit" 
     private let dataManager = LocalDataManager()
         
     
@@ -96,7 +96,6 @@ class ModelEngine: ObservableObject {
             // CASE A: TOMORROW
             if lowerInput.contains("tomorrow") || lowerInput.contains("tmrw") {
                 isStrict = true
-                // Swift ile veriyi biz filtreliyoruz (LLM'e bırakmıyoruz)
                 let lines = contextData.components(separatedBy: "\n")
                 let matches = lines.filter { $0.contains(tomorrowStr) }
                 
@@ -113,7 +112,6 @@ class ModelEngine: ObservableObject {
             // CASE B: NEXT EVENT
             else if lowerInput.contains("next") {
                 isStrict = true
-                // İlk satırı Swift ile alıyoruz
                 let lines = contextData.components(separatedBy: "\n").filter { $0.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "-") }
                 let nextEvent = lines.first ?? "No upcoming events found."
                 
@@ -128,7 +126,6 @@ class ModelEngine: ObservableObject {
             // CASE C: SUMMARIZE / WEEK
             else if lowerInput.contains("summarize") || lowerInput.contains("week") {
                 isStrict = true
-                // Tüm veriyi olduğu gibi basıyoruz
                 let summary = contextData.isEmpty ? "Your schedule is empty." : contextData
                 
                 forcedSystemInstruction = """
@@ -173,7 +170,6 @@ class ModelEngine: ObservableObject {
             prompt += forcedSystemInstruction
             prompt += "<|eot_id|>"
             
-            // Geçmiş sadece genel sohbette eklenir
             if !isStrict {
                 for msg in history.suffix(4) {
                     let role = msg.isUser ? "user" : "assistant"
