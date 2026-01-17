@@ -64,7 +64,7 @@ graph TD
 
 This architecture was not the starting point but the result of iterative failure analysis:
 
-* **Iteration 1 (Phi-3 Mini):** Initial tests with Microsoft's Phi-3 (3.8B) showed strong reasoning but unacceptable latency (3-4 tokens/sec) and thermal throttling on the iPhone 15 Pro.
+* **Iteration 1 (Phi-3 Mini): Initial tests with Microsoft's Phi-3 (3.8B) showed strong reasoning but unacceptable latency (3-4 tokens/sec) and thermal throttling. Additionally, the model's large footprint significantly increased the application's binary size (approx. 2.3GB+), making it impractical for standard mobile storage constraints.
 * **Iteration 2 (Llama 3.2 1B - Raw):** Switching to a smaller model solved the speed issue but introduced significant hallucinations. The model struggled to differentiate between "This Week" and "Next Week."
 * **Final State (Hybrid):** The Neuro-Symbolic approach was adopted. By treating the LLM as a "UI component" rather than a "Brain," the system achieved 100% factual accuracy on calendar tasks while maintaining conversational fluidity.
 
@@ -88,3 +88,4 @@ DailyMind operates on a strict **Local-Only** policy:
 2.  Open `ios-app/DailyMind.xcodeproj` in Xcode 15+.
 3.  Set the Signing Team to your Apple Developer account.
 4.  **Important:** Deploy to a physical device (iPhone 15 Pro or newer recommended). The MLX Metal backend requires physical GPU hardware; it will not run on the Simulator.
+
