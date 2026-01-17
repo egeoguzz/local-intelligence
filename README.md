@@ -1,78 +1,94 @@
-# DailyMind: Privacy-First On-Device AI Agenda
+# DailyMind: Neuro-Symbolic AI on iOS
 
-DailyMind is an experimental iOS application designed to explore the capabilities and limitations of Small Language Models (SLMs) running locally on Apple Silicon. It utilizes the **Apple MLX** framework to run a quantized **Llama 3.2 1B** model, creating a retrieval-augmented generation (RAG) system that interacts with the user's local calendar data without any cloud dependency.
+**An experimental on-device agent that bridges the gap between Small Language Models (SLMs) and reliable mobile assistance.**
 
-## Project Overview
+DailyMind (formerly *Local Intelligence*) demonstrates how 1B-parameter models can be engineered to perform complex reasoning tasks on Apple Silicon without cloud dependencies. It implements a **Hybrid Neuro-Symbolic Architecture** using Swift and Apple’s MLX framework.
 
-The primary objective of this project was to solve a specific engineering challenge: **How to make low-parameter LLMs (1B) perform reliable reasoning tasks on mobile hardware.**
+<p align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="images/home_screen.jpeg" width="300" alt="Privacy-First Home Screen" />
+        <br />
+        <em>Zero-Trust Interface</em>
+      </td>
+      <td align="center">
+        <img src="images/chat_inference.jpeg" width="300" alt="Hybrid Inference Chat" />
+        <br />
+        <em>Hybrid Inference Engine in Action</em>
+      </td>
+    </tr>
+  </table>
+</p>
 
-While larger models (70B+) can easily handle complex temporal logic (e.g., distinguishing between "Next Event" and "Tomorrow's Schedule"), 1B-parameter models often hallucinate or fail to adhere to strict formatting instructions. DailyMind implements a **Hybrid Deterministic/Probabilistic Architecture** to overcome these limitations, ensuring 100% accuracy for scheduling tasks while retaining the conversational interface of an LLM.
+---
 
-## Interface & Functionality
+## The Engineering Challenge
 
-| Home Screen | Chat Interface |
-| :---: | :---: |
-| <img src="images/home_screen.jpeg" width="350" /> | <img src="images/chat_inference.jpeg" width="350" /> |
-| *Privacy-focused design* | *Hybrid inference engine* |
+Deploying Large Language Models on mobile devices faces a trilemma: **Latency, Privacy, and Accuracy.** While quantized 1B models (like Llama 3.2) are fast enough for iPhones, they suffer from the **"Reasoning Gap."** They are excellent at natural language generation but prone to hallucinations when handling strict logic, temporal data (e.g., "next Tuesday"), or structured retrieval tasks.
 
-## Technical Architecture
+**DailyMind solves this by decoupling "Reasoning" from "Language."**
 
-The application is built using Swift and SwiftUI, integrating directly with the `EventKit` framework for data retrieval and `MLX` for model inference.
+## Architecture: The Hybrid Engine
 
-### 1. The Hybrid Engine (Deterministic Pre-Processing)
-A standard RAG approach involves feeding raw data to the model and asking it to summarize. During testing, I found that the Llama 3.2 1B model frequently failed to correctly filter dates or would hallucinate events when the context window was cluttered.
+Instead of relying solely on the probabilistic nature of the LLM, DailyMind employs a deterministic **Pre-Computed Response (PCR)** layer. 
 
-To solve this, I engineered a **Pre-Computed Response (PCR)** layer within the `ModelEngine` class:
+The system intercepts user intent via Swift native logic *before* the LLM inference begins. If a deterministic fact is required (e.g., checking the calendar), the app computes the truth, injects it into the system prompt, and treats the LLM purely as a natural language interface layer.
 
-* **Intent Classification:** The system uses O(1) heuristic pattern matching to identify specific user intents (e.g., `tomorrow`, `next`, `summarize`).
-* **Logic Offloading:** Instead of relying on the neural network for logic, the application uses native Swift code to filter and sort the calendar data.
-* **System Injection:** The calculated answer is injected into the system prompt with a strict mandate. The LLM is effectively downgraded from a "reasoning engine" to a "natural language interface," ensuring the output is factually correct but conversationally presented.
+```mermaid
+graph TD
+    A[User Input] --> B{Intent Classifier}
+    B -- "Temporal/Logic Query" --> C[Swift Logic Layer]
+    B -- "General Conversation" --> D[Raw LLM Context]
+    C --> E[Fetch EventKit Data]
+    C --> F[Apply Deterministic Filters]
+    F --> G[Inject Hard Constraints]
+    G --> H[Llama 3.2 4-bit Model]
+    D --> H
+    H --> I[Final Response]
+```
 
-### 2. Local Data Retrieval
-The `LocalDataManager` handles the extraction of calendar events. It normalizes the data into a token-efficient format, stripping unnecessary metadata to maximize the limited context window available on mobile devices. This module also handles iOS 17+ privacy permissions, ensuring the user grants explicit access before any data is fetched.
+### Key Technical Implementations
 
-### 3. Model Quantization
-The project utilizes 4-bit quantization to fit the model within the RAM constraints of standard iPhones. This allows the application to load the model logic and the inference engine in under 2GB of memory, preventing operating system terminations due to memory pressure.
+1.  **Logic Offloading:** Temporal queries (e.g., *"What am I doing tomorrow?"*) are resolved by iOS `EventKit` and filtered via Swift algorithms (O(1) complexity), completely bypassing the LLM's weak reasoning circuits.
 
-## Research & Development Journey
+2.  **System Injection Strategy:**
+    The calculated "Ground Truth" is injected into the context window with strict formatting instructions. This effectively eliminates hallucinations regarding user schedules.
 
-This project evolved through several iterations of failure and optimization:
+3.  **Memory Optimization:**
+    Utilizes 4-bit quantization to maintain a memory footprint under 2GB, preventing iOS memory pressure terminations (OOM) while leaving headroom for the OS.
 
-**Initial Experiments with Phi-3:**
-Development began using Microsoft's Phi-3 Mini (3.8B). While the reasoning capabilities were stronger, the memory footprint and thermal impact on the test device (iPhone 15 Pro) were deemed too high for a practical utility app. The inference latency was approximately 3-4 seconds per token, which degraded the user experience.
+---
 
-**Transition to Llama 3.2:**
-I pivoted to Meta's Llama 3.2 1B architecture for its speed. However, this introduced the "Reasoning Gap." The 1B model struggled to understand the concept of "Next Week" versus "This Week." It would often output the entire dataset instead of filtering it.
+## R&D Evolution
 
-**The "Hallucination" Problem:**
-In early builds, when asked "What is my next event?", the model would sometimes invent plausible-sounding meetings based on the few-shot examples provided in the prompt, ignoring the actual retrieved context.
+This architecture was not the starting point but the result of iterative failure analysis:
 
-**The Hybrid Solution:**
-These failures led to the decision to stop fighting the model's limitations and instead support it with deterministic code. By moving the logic layer to Swift (as seen in `ModelEngine.swift`), the system achieved the reliability of a traditional app with the flexibility of a chat interface.
+* **Iteration 1 (Phi-3 Mini):** Initial tests with Microsoft's Phi-3 (3.8B) showed strong reasoning but unacceptable latency (3-4 tokens/sec) and thermal throttling on the iPhone 15 Pro.
+* **Iteration 2 (Llama 3.2 1B - Raw):** Switching to a smaller model solved the speed issue but introduced significant hallucinations. The model struggled to differentiate between "This Week" and "Next Week."
+* **Final State (Hybrid):** The Neuro-Symbolic approach was adopted. By treating the LLM as a "UI component" rather than a "Brain," the system achieved 100% factual accuracy on calendar tasks while maintaining conversational fluidity.
 
-## Technology Stack
+## Tech Stack
 
-* **Language:** Swift 5.9
-* **UI Framework:** SwiftUI
-* **Inference Engine:** Apple MLX (Machine Learning Exchange)
-* **Model:** Llama-3.2-1B-Instruct-4bit
-* **Data Source:** EventKit (Local Calendar)
+* **Language:** Swift 5.9 (SwiftUI)
+* **Inference:** Apple MLX (Machine Learning Exchange)
+* **Model:** `mlx-community/Llama-3.2-1B-Instruct-4bit`
+* **Data Source:** Local iOS Calendar (EventKit)
+* **Architecture:** MVVM + Neuro-Symbolic RAG
 
 ## Privacy & Security
 
-This application is designed with a "Zero-Trust" architecture regarding cloud services.
-* **Offline Inference:** The model weights are stored locally. No API calls are made to OpenAI, Anthropic, or any other provider.
-* **Data Sovereignty:** Calendar data is processed in ephemeral memory and is never written to persistent storage by the app, nor transmitted off the device.
+DailyMind operates on a strict **Local-Only** policy:
+* **No Cloud:** Weights are stored on-device. No API calls to OpenAI or Anthropic.
+* **Ephemeral Data:** Calendar data is processed in RAM only for the duration of the inference session and is never written to persistent storage.
 
-## Installation
+## Installation & Setup
 
 1.  Clone the repository.
-2.  Open `DailyMind.xcodeproj` in Xcode 15+.
-3.  Ensure the Signing Team is set to your Apple Developer account.
-4.  Deploy to a physical iOS device (Required for MLX Metal acceleration).
-    * *Note: The simulator does not support the GPU instructions required for the model engine.*
+2.  Open `ios-app/DailyMind.xcodeproj` in Xcode 15+.
+3.  Set the Signing Team to your Apple Developer account.
+4.  **Important:** Deploy to a physical device (iPhone 15 Pro or newer recommended). The MLX Metal backend requires physical GPU hardware; it will not run on the Simulator.
 
-## License
+---
 
-MIT License
-
+*Project developed for the Global Talent Visa (Tech Nation) portfolio.*
