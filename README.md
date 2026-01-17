@@ -10,10 +10,10 @@ While larger models (70B+) can easily handle complex temporal logic (e.g., disti
 
 ## Interface & Functionality
 
-<p float="left">
-  <img src="images/home_screen.jpeg" width="300" alt="Home Screen showing privacy focus" />
-  <img src="images/chat_inference.jpeg" width="300" alt="Chat Interface showing hybrid inference" /> 
-</p>
+| Home Screen | Chat Interface |
+| :---: | :---: |
+| <img src="images/home_screen.jpeg" width="350" /> | <img src="images/chat_inference.jpeg" width="350" /> |
+| *Privacy-focused design* | *Hybrid inference engine* |
 
 ## Technical Architecture
 
@@ -75,3 +75,4 @@ This application is designed with a "Zero-Trust" architecture regarding cloud se
 ## License
 
 MIT License
+
