@@ -60,13 +60,14 @@ graph TD
 
 ---
 
-## R&D Evolution
+## Research & Development Journey
 
-This architecture was not the starting point but the result of iterative failure analysis:
+This architecture evolved through several iterations of testing and optimization:
 
-* **Iteration 1 (Phi-3 Mini): Initial tests with Microsoft's Phi-3 (3.8B) showed strong reasoning but unacceptable latency (3-4 tokens/sec) and thermal throttling. Additionally, the model's large footprint significantly increased the application's binary size (approx. 2.3GB+), making it impractical for standard mobile storage constraints.
-* **Iteration 2 (Llama 3.2 1B - Raw):** Switching to a smaller model solved the speed issue but introduced significant hallucinations. The model struggled to differentiate between "This Week" and "Next Week."
-* **Final State (Hybrid):** The Neuro-Symbolic approach was adopted. By treating the LLM as a "UI component" rather than a "Brain," the system achieved 100% factual accuracy on calendar tasks while maintaining conversational fluidity.
+* **Iteration 1 (Phi-3 Mini):** Initial tests with Microsoft's Phi-3 (3.8B) showed strong reasoning but unacceptable latency (3-4 tokens/sec) and thermal throttling. Additionally, the model's large footprint significantly increased the application's binary size (approx. 2.3GB+), making it impractical for standard mobile storage constraints.
+* **Iteration 2 (Qwen 2.5 1.5B):** Explored Alibaba’s Qwen 2.5 architecture for its high reasoning benchmarks. However, the model exhibited inconsistent instruction-following within the 4-bit mobile context, often failing to adhere to the strict system constraints required for the PCR (Pre-Computed Response) layer.
+* **Iteration 3 (Llama 3.2 1B - Raw):** Switching to a smaller 1B model solved the speed and memory issues but introduced significant hallucinations. The model struggled with temporal logic, failing to differentiate between "This Week" and "Next Week."
+* **Final State (Hybrid):** The Neuro-Symbolic approach was adopted. By treating the LLM as a "Natural Language UI" rather than a "Reasoning Engine," the system achieved 100% factual accuracy on calendar tasks while maintaining conversational fluidity.
 
 ## Tech Stack
 
