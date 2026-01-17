@@ -53,10 +53,6 @@ graph TD
 1.  **Deterministic Intent Classification (Logic Offloading):**
     Instead of using a secondary neural network (like BERT) which adds latency, the system uses O(1) heuristic pattern matching in Swift. This intentionally rigid approach ensures zero-latency detection for specific temporal triggers, completely bypassing the LLM's weak reasoning circuits for tasks like *"What am I doing tomorrow?"*.
 
-    <img src="images/intent_logic.jpeg" width="600" alt="Deterministic Swift Logic" />
-    <br />
-    <em>Figure: Native Swift pattern matching for zero-latency intent detection.</em>
-
 2.  **System Injection Strategy:**
     The calculated "Ground Truth" (fetched via iOS `EventKit`) is injected into the context window with strict formatting instructions. This effectively eliminates hallucinations regarding user schedules.
 
@@ -94,5 +90,6 @@ DailyMind operates on a strict **Local-Only** policy:
 2.  Open `ios-app/DailyMind.xcodeproj` in Xcode 15+.
 3.  Set the Signing Team to your Apple Developer account.
 4.  **Important:** Deploy to a physical device (iPhone 15 Pro or newer recommended). The MLX Metal backend requires physical GPU hardware; it will not run on the Simulator.
+
 
 
